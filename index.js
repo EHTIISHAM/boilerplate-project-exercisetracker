@@ -1,22 +1,33 @@
-const express = require('express')
+import express from 'express'
+import cors from 'cors'
+import { nanoid } from 'nanoid';
+import { Low, JSONFile } from 'lowdb';
+import dotenv from 'dotenv'
+import path from 'path';
+import { fileURLToPath } from 'url';
 const app = express()
-const cors = require('cors')
-const path = require("path");
-const { nanoid } = require("nanoid");
-const { Low, JSONFile } = require("lowdb");
-require('dotenv').config()
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 const db = new Low(new JSONFile("db.json"));
 await db.read();
 db.data ||= { users: [], exercises: [] };
 await db.write();
-
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 app.use(cors())
 app.use(express.static('public'))
 app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/views/index.html')
+  res.sendFile(path.join(__dirname, 'views', 'index.html'));
 });
 
+
+await db.read(); 
+
+db.data ||= { users: [], exercises: [] };
+db.data.users ||= [];
+db.data.exercises ||= [];
+await db.write(); 
 
 app.post("/api/users", async (req, res) => {
   const username = req.body.username;

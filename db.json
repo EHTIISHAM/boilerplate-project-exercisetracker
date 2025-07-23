@@ -1,0 +1,17 @@
+{
+  "users": [
+    {
+      "username": "ehtasham",
+      "_id": "yNEJe4_vxU__"
+    }
+  ],
+  "exercises": [
+    {
+      "_id": "yNEJe4_vxU__",
+      "username": "ehtasham",
+      "description": "12312",
+      "duration": 12,
+      "date": "Sat Oct 22 2022"
+    }
+  ]
+}
